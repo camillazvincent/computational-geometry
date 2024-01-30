@@ -1,4 +1,3 @@
-# CS4900-P1
 Project 1 (Computational Geometry)
 
 You will be creating a Computational Geometry package in Python. You must use the following tools/approaches when you develop your code:
