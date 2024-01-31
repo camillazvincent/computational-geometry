@@ -33,14 +33,32 @@ class LineSegment:
         return self.name
 
 
-# examples / test
-point1 = Point(0, 0, "P")
-point2 = Point(1, 2, "Q")
-point3 = Point(1, 1, "R")
-point4 = Point(2, 2, "S")
+class Circle:
+    """
+    A representation of a circle on the coordinate plane
+    """
+    def __init__(self, center: Point, radius: int | float):
+        self.center = center
+        self.radius = radius
+        self.name = "circle " + self.center.name
+        # this naming doesn't account for concentric circles
 
-print(point1)
-print(point2)
-line1 = LineSegment(point1, point3)
-print(line1)
-print(line1.coordinates)
+    def __str__(self):
+        return self.name
+
+
+if __name__ == "__main__":
+    # examples / test
+    point1 = Point(0, 0)
+    point2 = Point(1, 2, "Q")
+    point3 = Point(1, 1, "R")
+    point4 = Point(2, 2, "S")
+
+    print(point1)
+    print(point2)
+    line1 = LineSegment(point1, point3)
+    print(line1)
+    print(line1.coordinates)
+
+    circle1 = Circle(point1, 2)
+    print(circle1)
