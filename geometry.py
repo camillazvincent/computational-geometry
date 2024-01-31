@@ -1,48 +1,36 @@
 class Point:
     """
     A representation of a single point on the coordinate plane
-
-
     """
+    _counter = 0  # Class variable to keep track of the number of unnamed Point instances
+
     def __init__(self, x: int | float, y: int | float, name: str = None):
         self.x = x
         self.y = y
-        self.name = name
+        self.coordinates = self.x, self.y
+        if name is None:
+            # If `name` is not provided, assign a default name based on `_counter`
+            Point._counter += 1
+            self.name = f"P{Point._counter}"
+        else:
+            self.name = name
 
     def __str__(self):
-        return f"{self.name if self.name else ''}({self.x}, {self.y})"
-
-    def coordinates(self):
-        return self.x, self.y
+        return self.name
 
 
-class Line:
+class LineSegment:
     """
     A representation of a line segment on the coordinate plane
-
-
     """
-    def __init__(self, *points):
-        # Test if all points form a single line
-        self.points = points
-        if len(points) < 2:
-            raise ValueError("Must provide at least 2 points")
-        for i in range(len(points) - 2):
-            p1, p2, p3 = points[i], points[i + 1], points[i + 2]
-
-            # Calculate area of triangle formed by p1, p2, p3
-            area = 0.5 * abs(p1.x * (p2.y - p3.y) + p2.x * (p3.y - p1.y) + p3.x * (p1.y - p2.y))
-
-            if area != 0:
-                raise ValueError("Points are not collinear")
+    def __init__(self, point_1: Point, point_2: Point):
+        self.point_1 = point_1
+        self.point_2 = point_2
+        self.name = "segment " + self.point_1.name + self.point_2.name
+        self.coordinates = point_1.coordinates, point_2.coordinates
 
     def __str__(self):
-        rep = ''
-        for i in range(len(self.points)):
-            rep += f"{self.points[i].name}"
-            # Overline character: \u0304
-
-        return rep
+        return self.name
 
 
 # examples / test
@@ -53,5 +41,6 @@ point4 = Point(2, 2, "S")
 
 print(point1)
 print(point2)
-line1 = Line(point1, point3, point4)
+line1 = LineSegment(point1, point3)
 print(line1)
+print(line1.coordinates)

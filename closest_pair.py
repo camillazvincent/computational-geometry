@@ -21,7 +21,7 @@ class Closest_Pair:
 
             for i in range(n):
                 for j in range(i + 1, n):
-                    d = math.dist(points[i].coordinates(), points[j].coordinates())
+                    d = math.dist(points[i].coordinates, points[j].coordinates)
                     if d < min_dist:
                         min_dist = d
                         closest_pair = (points[i], points[j])
@@ -63,10 +63,10 @@ class Closest_Pair:
 
 
 # Example usage:
-# points = [Point(2, 3), Point(-3, 4), Point(-2.6, 3.62), Point(0.62, 5.62), Point(-1.86, 1.38), Point(-3, 1)]
-# pairs = Closest_Pair()
-# result = pairs.find(points)
+points = [Point(2, 3), Point(-3, 4), Point(-2.6, 3.62), Point(0.62, 5.62), Point(-1.86, 1.38), Point(-3, 1)]
+pairs = Closest_Pair()
+result = pairs.find(points)
 
-# print(f"First pair: {result[1][0]}")
-# print(f"Second pair: {result[1][1]}")
-# print(f"Distance between: {result[0]}")
+print(f"First pair: {result[1][0]}")
+print(f"Second pair: {result[1][1]}")
+print(f"Distance between: {result[0]}")
