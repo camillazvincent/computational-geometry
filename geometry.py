@@ -14,6 +14,7 @@ class Point:
             self.name = f"P{Point._counter}"
         else:
             self.name = name
+            # Initializing the name
 
     def __str__(self):
         return self.name
@@ -31,6 +32,7 @@ class LineSegment:
 
     def __str__(self):
         return self.name
+        # Returns the name back with the given points
 
 
 class Circle:
@@ -61,4 +63,5 @@ if __name__ == "__main__":
     print(line1.coordinates)
 
     circle1 = Circle(point1, 2)
+    # printing out the coordinates and the shape
     print(circle1)
