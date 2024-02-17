@@ -66,7 +66,7 @@ def get_lines():
         list: A list of line segments, where each line segment is represented as a tuple (x1, y1, x2, y2).
     """
     line_segments = []
-    print("Enter line segments in the format 'x1 y1 x2 y2'. Type 'E' to end.")
+    print("Enter line segments in the format 'x1 y1 x2 y2'. For example, '2 0 2 5'. Type 'E' to end.")
     while True:
         user_input = input()
         if user_input.upper() == 'E':
