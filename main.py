@@ -11,6 +11,7 @@ def main():
             runpy.run_module('intersection')
             break
         elif selection.startswith('2') or selection.lower().startswith('cl'):
+            runpy.run_module('closest_pair')
             break
         elif selection.startswith('3') or selection.lower().startswith('co'):
             runpy.run_module('convex_hull')
