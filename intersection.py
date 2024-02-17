@@ -1,83 +1,105 @@
-from geometry import Point, LineSegment
+import matplotlib.pyplot as plt
 
+def cross_product(ax, ay, bx, by):
+    return ax * by - ay * bx
 
-def cross_product(vector_a, vector_b):
     """
-    Calculate the cross (vector) product of two vectors.
+    Calculate the cross product of two vectors represented by points (ax, ay) and (bx, by).
 
     Args:
-        vector_a (Point): The first vector.
-        vector_b (Point): The second vector.
+        ax, ay: Coordinates of the first point of the first vector.
+        bx, by: Coordinates of the second point of the first vector.
 
     Returns:
         float: The cross product of the two vectors.
     """
-    return vector_a.x * vector_b.y - vector_a.y * vector_b.x
+def subtract_points(ax, ay, bx, by):
+    return ax - bx, ay - by
 
-
-def subtract_points(point_a, point_b):
     """
-    Subtract two points to create a vector from point2 to point1.
+    Subtract two points to create a vector from point B to point A.
 
     Args:
-        point_a (Point): The first point.
-        point_b (Point): The second point.
+        ax, ay: Coordinates of point A.
+        bx, by: Coordinates of point B.
 
     Returns:
-        Point: The vector from point2 to point1.
+        tuple: A vector represented by the difference between points A and B.
     """
-    return Point(point_a.x - point_b.x, point_a.y - point_b.y)
 
-
-def find_intersection(line_segment1, line_segment2):
+def find_intersection(s1, s2):
     """
     Find the intersection point of two line segments if it exists.
 
     Args:
-        line_segment1 (LineSegment): The first line segment.
-        line_segment2 (LineSegment): The second line segment.
+        s1: The first line segment represented as a tuple of its endpoints (x1, y1, x2, y2).
+        s2: The second line segment represented as a tuple of its endpoints (x1, y1, x2, y2).
 
     Returns:
-        Point or None: The intersection point if the line segments intersect, otherwise None.
+        tuple or None: The intersection point as a tuple (x, y) if the line segments intersect, otherwise None.
     """
-    # Convert line endpoints to vectors
-    direction_vector1 = subtract_points(line_segment1.point_2, line_segment1.point_1)
-    direction_vector2 = subtract_points(line_segment2.point_2, line_segment2.point_1)
-
-    # Calculate cross products
-    cross_of_directions = cross_product(direction_vector1, direction_vector2)
-    start_to_start_cross_direction1 = cross_product(subtract_points(line_segment2.point_1, line_segment1.point_1), direction_vector1)
-    start_to_start_cross_direction2 = cross_product(subtract_points(line_segment2.point_1, line_segment1.point_1), direction_vector2)
-
-    # Check for collinear and parallel cases
-    if cross_of_directions == 0:
-        if start_to_start_cross_direction1 == 0:
-            # The line segments are collinear
-            print("collinear")  # debug remove later
-            return None
-        else:
-            # The line segments are parallel
-            print("parallel")   # debug remove later
-            return None
-
-    # Calculate the intersection point
-    t = start_to_start_cross_direction2 / cross_of_directions
-    u = start_to_start_cross_direction1 / cross_of_directions
-
-    # Check if the intersection point is on both line segments
+    ax, ay, bx, by = s1
+    cx, cy, dx, dy = s2
+    r_px, r_py = subtract_points(bx, by, ax, ay)
+    s_px, s_py = subtract_points(dx, dy, cx, cy)
+    
+    r_cross_s = cross_product(r_px, r_py, s_px, s_py)
+    if r_cross_s == 0:
+        return None  # Lines are parallel or collinear
+    
+    q_px, q_py = subtract_points(cx, cy, ax, ay)
+    t = cross_product(q_px, q_py, s_px, s_py) / r_cross_s
+    u = cross_product(q_px, q_py, r_px, r_py) / r_cross_s
+    
     if 0 <= t <= 1 and 0 <= u <= 1:
-        intersection_point = Point(line_segment1.point_1.x + t * direction_vector1.x, line_segment1.point_1.y + t * direction_vector1.y)
+        intersection_point = (ax + t * r_px, ay + t * r_py)
+        print(f"Intersection at: {intersection_point}")
         return intersection_point
-
-    # If t and u are not between 0 and 1, the line segments do not intersect
+    
     return None
 
+def get_lines():
+    """
+    Prompt the user to enter line segments and collect them.
 
-if __name__ == "__main__":
-    line_segment1 = LineSegment(Point(0, 0), Point(1, 1))
-    line_segment2 = LineSegment(Point(0, 1), Point(1, 0))
-    line_segment3 = LineSegment(Point(0, 1), Point(1, 2))
+    Returns:
+        list: A list of line segments, where each line segment is represented as a tuple (x1, y1, x2, y2).
+    """
+    line_segments = []
+    print("Enter line segments in the format 'x1 y1 x2 y2'. For example, '2 0 2 5'. Type 'E' to end.")
+    while True:
+        user_input = input()
+        if user_input.upper() == 'E':
+            break
+        try:
+            segment = list(map(float, user_input.split()))
+            if len(segment) != 4:
+                print("Invalid input.")
+                continue
+            line_segments.append(segment)
+        except ValueError:
+            print("Invalid input. Please enter numbers.")
+            continue
+    return line_segments
 
-    intersection_point = find_intersection(line_segment1, line_segment2)
-    # intersection_point = find_intersection(line_segment1, line_segment3)
-    print(f"Intersection at: {intersection_point.coordinates}")
+line_segments = get_lines()
+
+# Check for intersections
+intersections = []
+for i in range(len(line_segments)):
+    for j in range(i+1, len(line_segments)):
+        intersection = find_intersection(line_segments[i], line_segments[j])
+        if intersection:
+            intersections.append(intersection)
+
+# Plotting
+plt.figure()
+for segment in line_segments:
+    plt.plot([segment[0], segment[2]], [segment[1], segment[3]], marker='o')
+for x, y in intersections:
+    plt.plot(x, y, 'rx')  # Mark intersections with red 'x'
+
+plt.title('Line Segment Intersections')
+plt.axis('scaled')
+plt.grid(True)
+plt.show()

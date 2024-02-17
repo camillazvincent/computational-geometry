@@ -1,3 +1,7 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
+
 def orientation(p, q, r):
     """
     Function to find orientation of ordered triplet (p, q, r).
@@ -46,12 +50,27 @@ def convex_hull(points):
     # Output result
     return [points[i] for i in hull]
 
+def plot_convex_hull(points, hull_points):
+    plt.figure()
+    xs, ys = zip(*points)  # Unpack the points
+    plt.scatter(xs, ys)  # Plot the points
+
+    hull_xs, hull_ys = zip(*hull_points + [hull_points[0]])  # Ensure the hull is closed by repeating the first point
+    plt.plot(hull_xs, hull_ys, 'r-')  # Plot the convex hull
+
+    plt.title('Convex Hull')
+    plt.axis('scaled')
+    plt.grid(True)
+    plt.show()
+
 
 def main():
-    points = [(0, 3), (2, 2), (1, 1), (2, 1), (3, 0), (0, 0), (3, 3)]
-    print(convex_hull(points))
+    points = np.array([tuple(map(int, point.split())) for point in input("Enter points in 'x y' format, separated by commas. For example, '0 0, 1 5, 5,1': \n").split(',')])
+    hull_points = convex_hull(points)
+    hull_points_tuples = [tuple(point) for point in hull_points]
+    print(hull_points_tuples)
     print("This is considered a Convex Hull from the given points")
+    plot_convex_hull(points, hull_points)
 
 
-if __name__ == "__main__":
-    main()
+main()
