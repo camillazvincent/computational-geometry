@@ -30,7 +30,7 @@ def find_largest_circle(points):
     return best_vertex, max_radius
 
 # Example points
-points = np.array([(0, 3), (2, 2), (1, 1), (2, 1), (3, 0), (0, 0), (3, 3)])
+points = np.array([tuple(map(int, point.split())) for point in input("Enter points in 'x y' format, separated by commas. For example, '0 0, 1 5, 5,1': \n").split(',')])
 
 center, radius = find_largest_circle(points)
 print(f"Center: {center}, Radius: {radius}")
