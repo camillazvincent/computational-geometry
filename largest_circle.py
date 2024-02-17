@@ -37,8 +37,11 @@ print(f"Center: {center}, Radius: {radius}")
 
 vor = Voronoi(points)
 fig = voronoi_plot_2d(vor)
+plt.title('Largest Circle')
+plt.axis('scaled')
+plt.grid(True)
 plt.plot(points[:, 0], points[:, 1], 'o')
 plt.plot(center[0], center[1], 'xr')  # Center of the largest circle
-circle = plt.Circle(center, radius, color='r', fill=False)
+circle = plt.Circle(center, radius, color='r')
 plt.gca().add_artist(circle)
 plt.show()

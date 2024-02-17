@@ -100,6 +100,6 @@ for x, y in intersections:
     plt.plot(x, y, 'rx')  # Mark intersections with red 'x'
 
 plt.title('Line Segment Intersections')
+plt.axis('scaled')
 plt.grid(True)
-plt.axis('equal')
 plt.show()
