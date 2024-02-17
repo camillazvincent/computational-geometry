@@ -1,6 +1,9 @@
 import runpy
 
 def main():
+    '''
+    This function lets the user select what they would like to do. Then it executes runs the module that the user selected.
+    '''
     while True:
         selection = input("Please select what you would like to do. \n 1. Intersection \n 2. Closest pair \n 3. Convex hull \n 4. Largest Circle \n")
 

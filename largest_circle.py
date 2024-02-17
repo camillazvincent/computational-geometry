@@ -3,12 +3,29 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 def inside_convex_hull(hull, point):
-    """Check if a point is inside the convex hull."""
+    """
+    Check if a point is inside the convex hull.
+
+    Args:
+        hull: A ConvexHull object representing the convex hull of a set of points.
+        point: The point (as a numpy array) to check if it lies inside the convex hull.
+
+    Returns:
+        bool: True if the point is inside the convex hull, False otherwise.
+    """
     new_hull = ConvexHull(np.concatenate((hull.points, [point])))
     return np.array_equal(new_hull.vertices, hull.vertices)
 
 def find_largest_circle(points):
-    # Compute the convex hull of the input points
+    """
+    Find the center and radius of the largest circle that can fit inside the convex hull of a set of points without containing any of these points.
+
+    Args:
+        points: A numpy array of points in the format [[x1, y1], [x2, y2], ...].
+
+    Returns:
+        tuple: The coordinates of the center of the largest circle and its radius.
+    """
     hull = ConvexHull(points)
 
     # Compute the Voronoi diagram
@@ -29,7 +46,7 @@ def find_largest_circle(points):
 
     return best_vertex, max_radius
 
-# Example points
+# User input for points
 points = np.array([tuple(map(int, point.split())) for point in input("Enter points in 'x y' format, separated by commas. For example, '0 0, 1 5, 5,1': \n").split(',')])
 
 center, radius = find_largest_circle(points)
