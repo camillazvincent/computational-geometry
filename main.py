@@ -19,14 +19,14 @@ while True:
         intersection()
         break
     elif selection.startswith('2') or selection.lower().startswith('cl'):
-        print("The color is yellow.")
+        closest_pair()
         break
     elif selection.startswith('3') or selection.lower().startswith('co'):
-        print("The color is blue.")
+        convex_hull()
         break
     elif selection.startswith('4') or selection.lower().startswith('l'):
-        print("The color is green.")
+        largest_circle()
         break
     else:
-        print("Invalid input. Please enter a number between 1 and 4 or the initial letter.")
+        print("Invalid input. Please enter a number between 1 and 4.")
 
