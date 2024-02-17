@@ -9,6 +9,7 @@ while True:
     elif selection.startswith('2') or selection.lower().startswith('cl'):
         break
     elif selection.startswith('3') or selection.lower().startswith('co'):
+        runpy.run_module('convex_hull.py')
         break
     elif selection.startswith('4') or selection.lower().startswith('l'):
         runpy.run_module('largest_circle.py')
