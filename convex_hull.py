@@ -73,6 +73,4 @@ def main():
     plot_convex_hull(points, hull_points)
 
 
-
-if __name__ == "__main__":
-    main()
+main()
